@@ -17,21 +17,8 @@ class VMCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     
     var model = MutableProperty(Model())
-    
     let vm = GNCellViewModel()
     
-//    var model: Model? {
-//
-//        willSet {
-//
-//            guard model?.song_id == newValue?.song_id else {
-//
-//
-//                return
-//            }
-//
-//        }
-//    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -40,7 +27,6 @@ class VMCell: UITableViewCell {
         name.reactive.text <~ vm.name
         imgView.reactive.image <~ vm.image
         vm.model <~ model
-        
     }
 
     

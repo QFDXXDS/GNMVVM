@@ -20,11 +20,22 @@ class GNCellViewModel {
     
     init() {
         
-        model.signal.observeValues { (model) in
+        model.signal.observeValues { [unowned self] (newValue) in
             
-            self.title.value = model.title!
-            self.name.value = model.artist_name!
-            
+            guard self.model.value.song_id == newValue.song_id else {
+                
+                self.title.value = newValue.title!
+                self.name.value = newValue.artist_name!
+                
+                KingfisherManager.shared.retrieveImage(with: ImageResource.init(downloadURL: URL.init(string: newValue.pic_big!)!), options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
+                    
+                    if image != nil {
+                        
+                        self.image.value = image!
+                    }
+                })
+                return
+            }
         }
     }
     
